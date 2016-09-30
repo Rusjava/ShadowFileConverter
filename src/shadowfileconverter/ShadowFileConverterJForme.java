@@ -504,7 +504,7 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getViewport().add(scriptArea, BorderLayout.CENTER);
-        Object[] message = {new JLabel("Type script:", SwingConstants.CENTER), scrollPane};
+        Object[] message = {new JLabel("Type Tcl script:", SwingConstants.CENTER), scrollPane};
         //Showing help and reading the result
         int option = JOptionPane.showConfirmDialog(null, message, "Script", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
