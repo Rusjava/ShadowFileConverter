@@ -47,7 +47,6 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.CancellationException;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -72,10 +71,11 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
 import tclinterpreter.AbstractTclInterpreter;
+import tclinterpreter.TclCommand;
 import tclinterpreter.TclInterpreter;
-import tclinterpreter.TclLexer;
-import tclinterpreter.TclNode;
-import tclinterpreter.TclParser;
+import tcllexer.TclLexer;
+import tclparser.TclNode;
+import tclparser.TclParser;
 
 /*
  * The program converts binary Shadow ray files to text files and
@@ -789,7 +789,7 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
         int nStart, nEnd, kLen;
         try {
             String text = doc.getText(0, doc.getLength() - 1);
-            for (Entry<String, Function<TclNode, String>> keyWordEntry : ((TclInterpreter)interpreter).COMMANDS.entrySet()) {
+            for (Entry<String, TclCommand<TclNode, String>> keyWordEntry : ((TclInterpreter)interpreter).COMMANDS.entrySet()) {
                 kLen = keyWordEntry.getKey().length();
                 nStart = start - kLen < 0 ? 0 : start - kLen;
                 nEnd = end + kLen > doc.getLength() - 1 ? doc.getLength() - 1 : end + kLen;
@@ -811,7 +811,7 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
      */
     protected void removeHighlight(JTextComponent scriptArea, int start, int end) {
         int nStart, kLen;
-        for (Entry<String, Function<TclNode, String>> keyWordEntry : ((TclInterpreter)interpreter).COMMANDS.entrySet()) {
+        for (Entry<String, TclCommand<TclNode, String>> keyWordEntry : ((TclInterpreter)interpreter).COMMANDS.entrySet()) {
             kLen = keyWordEntry.getKey().length();
             nStart = start - kLen < 0 ? 0 : start - kLen;
             for (Highlighter.Highlight highlight : scriptArea.getHighlighter().getHighlights()) {
