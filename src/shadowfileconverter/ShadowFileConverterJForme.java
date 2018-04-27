@@ -47,7 +47,6 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.CancellationException;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
