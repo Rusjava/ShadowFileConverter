@@ -20,10 +20,28 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.lpi.shadowfileconverter.ShadowFileConverterJForme</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>mcopy-dependencies</id>
+                        <phase>package</phase> <!-- binds to mvn package -->
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
