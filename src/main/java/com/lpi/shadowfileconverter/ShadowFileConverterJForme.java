@@ -24,6 +24,7 @@ import java.awt.GridLayout;
 import java.io.IOException;
 import java.io.EOFException;
 import java.io.File;
+import java.io.ByteArrayOutputStream;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -275,9 +276,9 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
         direction = (ActionSelectionjComboBox.getSelectedIndex() == 1);
     }//GEN-LAST:event_ActionSelectionjComboBoxActionPerformed
 
-        /**
-         * Main action
-         */
+    /**
+     * Main action
+     */
     private void actionJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionJButtonActionPerformed
         // TODO add your handling code here:
         if (working) {
@@ -386,9 +387,9 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
                 "About ShadowFileConverter", 1);
     }//GEN-LAST:event_AboutjMenuItemActionPerformed
 
-        /**
-         * Changing the maximal number of rays
-         */
+    /**
+     * Changing the maximal number of rays
+     */
     private void ParametersJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ParametersJMenuItemActionPerformed
         // TODO add your handling code here:
         //Creating JPanels for beginning and ending column numbers
@@ -422,8 +423,11 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
     }//GEN-LAST:event_ParametersJMenuItemActionPerformed
 
     private void ScriptJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ScriptJMenuItemActionPerformed
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
         // Defining a text area
-        JTextArea scriptArea = new JTextArea("set outputRays inputRays\nputs inputRays", 20, 60);
+        JTextArea scriptArea = new JTextArea("print('Hello from GraalPy inside NetBeans!')", 20, 60);
         scriptArea.setLineWrap(false);
         scriptArea.setWrapStyleWord(true);
 
@@ -437,7 +441,7 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
         Context context = Context.newBuilder("python")
                 .allowIO(IOAccess.ALL)
                 .allowAllAccess(true)
-                .option("python.ForceImportSite", "true")
+                .out(outputStream)
                 .build();
 
         //Showing help and reading the result
@@ -445,17 +449,18 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
         if (option == JOptionPane.OK_OPTION) {
             // Execute your logic safely
             try {
-                context.eval("python",
-                        "import termcolor\n"
-                        + "termcolor.cprint('Hello from GraalPy inside NetBeans!', color='red', on_color='on_green', attrs='italic')");
+                // Force stdout to flush on every newline (or use write_through=True)
+                context.eval("python", scriptArea.getText());
             } catch (Exception ex) {
-
+                ex.printStackTrace();
             }
+            String result = outputStream.toString();
+            System.out.println("Java received: " + result.trim());
         }
     }//GEN-LAST:event_ScriptJMenuItemActionPerformed
-        /*
+    /*
      * Displaying help from a html resource file
-         */
+     */
     private void HelpJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpJMenuItemActionPerformed
         // Creating JEditorPane to display the help file
         JEditorPane textArea = new JEditorPane();
@@ -573,15 +578,15 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_NimbusJRadioButtonMenuItemItemStateChanged
 
-        /**
-         * @param args the command line arguments
-         */
-        public static void main(String args[]) {
-            /* Set the Nimbus look and feel */
-            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-             */
+         */
  /*try {
          for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
          if ("Nimbus".equals(info.getName())) {
@@ -598,16 +603,16 @@ public class ShadowFileConverterJForme extends javax.swing.JFrame {
          } catch (javax.swing.UnsupportedLookAndFeelException ex) {
          java.util.logging.Logger.getLogger(ShadowFileConverterJForme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
          }*/
-            //</editor-fold>
-            try {
-                javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        //</editor-fold>
+        try {
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 
-            }
-            Locale.setDefault(new Locale("en", "US"));
-            /* Create and display the form */
-            java.awt.EventQueue.invokeLater(() -> new ShadowFileConverterJForme().setVisible(true));
         }
+        Locale.setDefault(new Locale("en", "US"));
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new ShadowFileConverterJForme().setVisible(true));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutjMenuItem;

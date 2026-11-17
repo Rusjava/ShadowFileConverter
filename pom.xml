@@ -57,5 +57,11 @@
             <version>25.3.4.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.graalvm.python</groupId>
+            <artifactId>python-community</artifactId>
+            <version>25.3.4.1</version>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 </project>
